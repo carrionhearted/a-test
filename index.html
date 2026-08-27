@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Chat</h1>
+                <div class="header-icons">
+                    <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="close-btn" id="closeSettings">&times;</button>
+                </div>
+                
+                <!-- Theme Section -->
+                <div class="settings-section">
+                    <h3>Theme</h3>
+                    <div class="theme-options">
+                        <button class="theme-btn" data-theme="light" title="Light Theme">☀️ Light</button>
+                        <button class="theme-btn" data-theme="dark" title="Dark Theme">🌙 Dark</button>
+                        <button class="theme-btn" data-theme="ocean" title="Ocean Theme">🌊 Ocean</button>
+                        <button class="theme-btn" data-theme="forest" title="Forest Theme">🌲 Forest</button>
+                    </div>
+                </div>
+
+                <!-- Wallpaper Section -->
+                <div class="settings-section">
+                    <h3>Wallpaper</h3>
+                    <div class="wallpaper-options">
+                        <button class="wallpaper-btn" data-wallpaper="default" title="Default">Default</button>
+                        <button class="wallpaper-btn" data-wallpaper="gradient" title="Gradient">Gradient</button>
+                        <button class="wallpaper-btn" data-wallpaper="pattern" title="Pattern">Pattern</button>
+                    </div>
+                    <div class="custom-wallpaper">
+                        <label for="wallpaperUpload">Upload Custom Wallpaper:</label>
+                        <input type="file" id="wallpaperUpload" accept="image/*">
+                        <div id="wallpaperPreview" class="wallpaper-preview"></div>
+                    </div>
+                </div>
+
+                <!-- Reset Button -->
+                <button class="reset-btn" id="resetBtn">Reset to Defaults</button>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area" id="chatArea">
+            <div class="empty-state">
+                <div class="empty-icon">💬</div>
+                <p>No messages yet. Start chatting!</p>
+            </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="input-area">
+            <input 
+                type="text" 
+                id="messageInput" 
+                class="message-input" 
+                placeholder="Type a message..."
+                autocomplete="off"
+            >
+            <button class="send-btn" id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
