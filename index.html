@@ -3,78 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Chat</title>
+    <title>Telegram Chat Clone</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <h1>Chat</h1>
-                <div class="header-icons">
-                    <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+        <!-- Sidebar (Contacts/Chats) -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Chats</h2>
+                <div class="sidebar-actions">
+                    <button class="icon-btn" id="newChatBtn" title="New Chat">✏️</button>
+                    <button class="icon-btn" id="sidebarMenuBtn" title="Menu">⋯</button>
                 </div>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchChats" placeholder="Search chats...">
+            </div>
+            <div class="chats-list" id="chatsList">
+                <!-- Chat items will be added here -->
             </div>
         </div>
 
-        <!-- Settings Modal -->
-        <div id="settingsModal" class="modal hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Settings</h2>
-                    <button class="close-btn" id="closeSettings">&times;</button>
+        <!-- Main Chat Area -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="header-info">
+                        <h1 id="chatTitle">Start a conversation</h1>
+                        <p id="chatSubtitle" class="subtitle"></p>
+                    </div>
+                    <div class="header-icons">
+                        <button class="icon-btn" id="callBtn" title="Voice Call">📞</button>
+                        <button class="icon-btn" id="videoBtn" title="Video Call">📹</button>
+                        <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="settingsModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Settings</h2>
+                        <button class="close-btn" id="closeSettings">&times;</button>
+                    </div>
+                    
+                    <!-- Theme Section -->
+                    <div class="settings-section">
+                        <h3>🎨 Appearance</h3>
+                        <div class="subsection">
+                            <label class="setting-label">Preset Theme</label>
+                            <div class="theme-options">
+                                <button class="theme-btn" data-theme="light" title="Light Theme">☀️</button>
+                                <button class="theme-btn" data-theme="dark" title="Dark Theme">🌙</button>
+                                <button class="theme-btn" data-theme="ocean" title="Ocean Theme">🌊</button>
+                                <button class="theme-btn" data-theme="forest" title="Forest Theme">🌲</button>
+                                <button class="theme-btn" data-theme="sunset" title="Sunset Theme">🌅</button>
+                                <button class="theme-btn" data-theme="midnight" title="Midnight Theme">⭐</button>
+                            </div>
+                        </div>
+
+                        <!-- Custom Theme Editor -->
+                        <div class="subsection">
+                            <label class="setting-label">Custom Theme Builder</label>
+                            <div class="color-picker-group">
+                                <div class="color-picker-item">
+                                    <label for="customPrimary">Primary Color:</label>
+                                    <input type="color" id="customPrimary" value="#ffffff">
+                                </div>
+                                <div class="color-picker-item">
+                                    <label for="customSecondary">Secondary Color:</label>
+                                    <input type="color" id="customSecondary" value="#f5f5f5">
+                                </div>
+                                <div class="color-picker-item">
+                                    <label for="customAccent">Accent Color:</label>
+                                    <input type="color" id="customAccent" value="#0084ff">
+                                </div>
+                                <div class="color-picker-item">
+                                    <label for="customText">Text Color:</label>
+                                    <input type="color" id="customText" value="#000000">
+                                </div>
+                            </div>
+                            <button class="save-custom-btn" id="saveCustomTheme">Save Custom Theme</button>
+                        </div>
+                    </div>
+
+                    <!-- Wallpaper Section -->
+                    <div class="settings-section">
+                        <h3>🖼️ Chat Background</h3>
+                        <div class="subsection">
+                            <label class="setting-label">Preset Wallpapers</label>
+                            <div class="wallpaper-options">
+                                <button class="wallpaper-btn" data-wallpaper="default" title="Default">Default</button>
+                                <button class="wallpaper-btn" data-wallpaper="gradient" title="Gradient">Gradient</button>
+                                <button class="wallpaper-btn" data-wallpaper="pattern" title="Pattern">Pattern</button>
+                                <button class="wallpaper-btn" data-wallpaper="blur" title="Blur">Blur</button>
+                            </div>
+                        </div>
+                        <div class="custom-wallpaper">
+                            <label for="wallpaperUpload">Upload Custom Wallpaper:</label>
+                            <input type="file" id="wallpaperUpload" accept="image/*">
+                            <div id="wallpaperPreview" class="wallpaper-preview"></div>
+                            <div class="wallpaper-options-advanced">
+                                <label for="wallpaperOpacity">Background Opacity:</label>
+                                <input type="range" id="wallpaperOpacity" min="0" max="100" value="100">
+                                <span id="opacityValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-section">
+                        <h3>🔔 Notifications</h3>
+                        <div class="subsection">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="soundEnabled" checked>
+                                Enable Sound
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="vibrationEnabled" checked>
+                                Enable Vibration
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button class="reset-btn" id="resetBtn">Reset to Defaults</button>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area" id="chatArea">
+                <div class="empty-state">
+                    <div class="empty-icon">💬</div>
+                    <p>Select or start a conversation</p>
+                </div>
+            </div>
+
+            <!-- Message Input with attachments -->
+            <div class="input-area">
+                <button class="icon-btn attach-btn" id="attachBtn" title="Attach file">📎</button>
+                <input type="file" id="fileInput" accept="image/*,.pdf,.doc,.docx" hidden>
                 
-                <!-- Theme Section -->
-                <div class="settings-section">
-                    <h3>Theme</h3>
-                    <div class="theme-options">
-                        <button class="theme-btn" data-theme="light" title="Light Theme">☀️ Light</button>
-                        <button class="theme-btn" data-theme="dark" title="Dark Theme">🌙 Dark</button>
-                        <button class="theme-btn" data-theme="ocean" title="Ocean Theme">🌊 Ocean</button>
-                        <button class="theme-btn" data-theme="forest" title="Forest Theme">🌲 Forest</button>
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        class="message-input" 
+                        placeholder="Write a message..."
+                        autocomplete="off"
+                        rows="1"
+                    ></textarea>
+                    <div class="input-actions">
+                        <button class="icon-btn emoji-btn" id="emojiBtn" title="Emoji">😊</button>
+                        <button class="send-btn" id="sendBtn">Send</button>
                     </div>
                 </div>
-
-                <!-- Wallpaper Section -->
-                <div class="settings-section">
-                    <h3>Wallpaper</h3>
-                    <div class="wallpaper-options">
-                        <button class="wallpaper-btn" data-wallpaper="default" title="Default">Default</button>
-                        <button class="wallpaper-btn" data-wallpaper="gradient" title="Gradient">Gradient</button>
-                        <button class="wallpaper-btn" data-wallpaper="pattern" title="Pattern">Pattern</button>
-                    </div>
-                    <div class="custom-wallpaper">
-                        <label for="wallpaperUpload">Upload Custom Wallpaper:</label>
-                        <input type="file" id="wallpaperUpload" accept="image/*">
-                        <div id="wallpaperPreview" class="wallpaper-preview"></div>
-                    </div>
-                </div>
-
-                <!-- Reset Button -->
-                <button class="reset-btn" id="resetBtn">Reset to Defaults</button>
             </div>
         </div>
+    </div>
 
-        <!-- Chat Area -->
-        <div class="chat-area" id="chatArea">
-            <div class="empty-state">
-                <div class="empty-icon">💬</div>
-                <p>No messages yet. Start chatting!</p>
-            </div>
-        </div>
-
-        <!-- Message Input -->
-        <div class="input-area">
-            <input 
-                type="text" 
-                id="messageInput" 
-                class="message-input" 
-                placeholder="Type a message..."
-                autocomplete="off"
-            >
-            <button class="send-btn" id="sendBtn">Send</button>
+    <!-- Emoji Picker Modal -->
+    <div id="emojiModal" class="emoji-modal hidden">
+        <div class="emoji-grid" id="emojiGrid">
+            <!-- Emojis will be added here -->
         </div>
     </div>
 
